@@ -1,12 +1,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 
+#include <renderer.h>
 #include <GLFW/glfw3.h>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <vector>
 
-#include "core/renderer/renderer.h"
 #include "core/model_loader.h"
 #include "core/filesystem.h"
 
@@ -48,7 +48,7 @@ int main()
         ModelLoader* loader = ModelLoader::get();
         Model model = loader->loadModel(FileSystem::getPath("data/models/backpack/backpack.obj"));
 
-        std::vector<std::shared_ptr<Crioulo::Texture>> textures;
+        std::vector<Crioulo::Texture> textures;
 
         for(const TextureData& loaderTextureData : model.textures)
         {
@@ -57,7 +57,7 @@ int main()
             textureData.width = loaderTextureData.width;
             textureData.nrComponents = loaderTextureData.nrComponents;
             textureData.data = loaderTextureData.data;
-            textures.push_back(renderer.loadTexture(textureData));
+            textures.push_back(Crioulo::Texture(textureData));
         }
 
         std::string vertexShader;
@@ -73,7 +73,7 @@ int main()
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
         }
 
-        std::shared_ptr<Crioulo::Shader> shader = renderer.loadShader(vertexShader.c_str(), fragmentShader.c_str());
+        Crioulo::Shader shader(vertexShader.c_str(), fragmentShader.c_str());
 
         std::vector<std::shared_ptr<Crioulo::MeshInstance>> instances(model.meshes.size());
         
@@ -89,7 +89,7 @@ int main()
                 meshData.vertices.push_back(vertexData);
             }
             meshData.indices = loaderMeshData.indices;
-            std::shared_ptr<Crioulo::Mesh> mesh = renderer.loadMesh(meshData);
+            Crioulo::Mesh mesh(meshData);
 
             std::vector<Crioulo::TextureSlot> instanceTextures;
 
