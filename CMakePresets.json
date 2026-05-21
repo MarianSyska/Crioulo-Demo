@@ -2,26 +2,84 @@
     "version": 8,
     "configurePresets": [
         {
-            "name": "Visual Studio Community 2022 Release - amd64",
-            "displayName": "Visual Studio Community 2022 Release - amd64",
-            "description": "Using compilers for Visual Studio 17 2022 (x64 architecture)",
-            "generator": "Visual Studio 17 2022",
-            "toolset": "host=x64",
-            "architecture": "x64",
+            "name": "x64-Debug",
+            "displayName": "Debug (VS 2026 Win64)",
+            "generator": "Visual Studio 18 2026",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "architecture": "x64",
             "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_C_COMPILER": "cl.exe",
-                "CMAKE_CXX_COMPILER": "cl.exe"
+                "CMAKE_C_COMPILER":       { "type": "STRING", "value": "cl" },
+                "CMAKE_CXX_COMPILER":     { "type": "STRING", "value": "cl" },
+                "CRIOULO_INCLUDE_TRACY":  { "type": "BOOL", "value": "True" },
+                "CRIOULO_TRACY_ENABLE":   { "type": "BOOL", "value": "False" },
+                "CRIOULO_LOGGING_LEVEL":  { "type": "STRING", "value": "1" }
+            }
+        },
+                {
+            "name": "x64-Release",
+            "displayName": "Release (VS 2026 Win64)",
+            "generator": "Visual Studio 18 2026",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "architecture": "x64",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER":       { "type": "STRING", "value": "cl" },
+                "CMAKE_CXX_COMPILER":     { "type": "STRING", "value": "cl" },
+                "CRIOULO_INCLUDE_TRACY":  { "type": "BOOL", "value": "True" },
+                "CRIOULO_TRACY_ENABLE":   { "type": "BOOL", "value": "True" },
+                "CRIOULO_LOGGING_LEVEL":  { "type": "STRING", "value": "6" }
+            }
+        },
+        {
+            "name": "mingw64-Release",
+            "displayName": "Release (MinGW x64)",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER":       { "type": "STRING", "value": "x86_64-w64-mingw32-gcc" },
+                "CMAKE_CXX_COMPILER":     { "type": "STRING", "value": "x86_64-w64-mingw32-g++" },
+                "CRIOULO_INCLUDE_TRACY":  { "type": "BOOL", "value": "True" },
+                "CRIOULO_TRACY_ENABLE":   { "type": "BOOL", "value": "False" },
+                "CRIOULO_LOGGING_LEVEL":  { "type": "STRING", "value": "1" }
+            }
+        },
+        {
+            "name": "mingw64-Debug",
+            "displayName": "Debug (MinGW x64)",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER":       { "type": "STRING", "value": "x86_64-w64-mingw32-gcc" },
+                "CMAKE_CXX_COMPILER":     { "type": "STRING", "value": "x86_64-w64-mingw32-g++" },
+                "CRIOULO_INCLUDE_TRACY":  { "type": "BOOL", "value": "True" },
+                "CRIOULO_TRACY_ENABLE":   { "type": "BOOL", "value": "True" },
+                "CRIOULO_LOGGING_LEVEL":  { "type": "STRING", "value": "6" }
             }
         }
     ],
     "buildPresets": [
         {
-            "name": "Visual Studio Community 2022 Release - amd64-debug",
-            "displayName": "Visual Studio Community 2022 Release - amd64 - Debug",
-            "configurePreset": "Visual Studio Community 2022 Release - amd64",
-            "configuration": "Debug"
+            "name": "x64-Debug",
+            "displayName": "Debug (VS 2026 Win64)",
+            "configurePreset": "x64-Debug"
+        },
+        {
+            "name": "x64-Release",
+            "displayName": "Release (VS 2026 Win64)",
+            "configurePreset": "x64-Release"
+        },
+        {
+            "name": "mingw64-Debug",
+            "displayName": "Debug (MinGW x64)",
+            "configurePreset": "mingw64-Debug"
+        },
+        {
+            "name": "mingw64-Release",
+            "displayName": "Release (MinGW x64)",
+            "configurePreset": "mingw64-Release"
         }
     ]
 }

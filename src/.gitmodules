@@ -1,0 +1,3 @@
+[submodule "lib/Crioulo"]
+	path = lib/Crioulo
+	url = https://github.com/MarianSyska/Crioulo.git
